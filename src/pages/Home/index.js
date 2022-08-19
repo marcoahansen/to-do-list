@@ -5,13 +5,13 @@ import './home.css'
 
 function Home(){
     const navigate = useNavigate()
-
+    
     const [idToDo, setIdToDo] = useState(0)
-
+    
     const [toDos, setToDos] = useState([])
-
+    
     const [input, setInput] = useState('')
-
+    
     useEffect(()=>{
         const toDosStorage = localStorage.getItem('toDos');
         
@@ -59,11 +59,11 @@ function Home(){
         <div className='all-todos-list'>
             <div className='todos-list-container todo-input'>
                 <input type='text' value={input} onChange={e => setInput(e.target.value)}/>
-                <button type='button' onClick={addToDo}>Adicionar</button>
+                <button type='button' disabled={!input} onClick={addToDo}>Adicionar</button>
             </div>
             <ul>
                 {toDos.map((toDo, index) =>(
-                    <li className='todos-list todos-list-container' key={toDo.id}>
+                    <li className={toDo.status ? 'todos-list todos-list-container completed' : 'todos-list todos-list-container'} key={toDo.id}>
                         <label className="toggler-wrapper style-9">
                             <input type='checkbox' id='status' checked={toDo.status} onChange={()=> toggleStatus(toDo.id)}/>
                             <div className="toggler-slider">

@@ -18,6 +18,10 @@
     align-items: center;
 }
 
+.completed{
+  background-color:  #598392;
+}
+
 .todo-text{
     display: flex;
     justify-content: flex-start;
@@ -29,16 +33,23 @@
 }
 
 .todo-input input{
-    width: 70%;
+    width: 60%;
     background-color: #EFF6E0;
     border: transparent;
     height: 30px;
+    padding: 8px;
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
+    font-size: 16px;
+}
+
+.todo-input input:focus-visible{
+  outline: transparent;
+  
 }
 
 .todo-input button{
-    width: 30%;
+    width: 40%;
     background-color: #021e29;
     border: transparent;
     height: 31px;
@@ -46,6 +57,7 @@
     border-bottom-right-radius: 5px;
     color: #EFF6E0;
     font-weight: 600;
+    font-size: 15px;
 }
 
 .toggler-wrapper {
@@ -61,7 +73,7 @@
   }
   
   .toggler-wrapper input[type="checkbox"]:checked+.toggler-slider {
-    background-color: #44cc66;
+    background-color: #01161E;
   }
   
   .toggler-wrapper .toggler-slider {
@@ -88,7 +100,7 @@
 
 .toggler-wrapper.style-9 input[type="checkbox"]:checked+.toggler-slider .toggler-knob {
     left: calc(100% - 19px - 3px);
-    background-color: #44cc66;
+    background-color: #124559;
 }
   
   .toggler-wrapper.style-9 .toggler-slider {
