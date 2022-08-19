@@ -1,0 +1,13 @@
+.footer{
+    height: 60px;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #124559;
+}
+
+.github{
+    color:#EFF6E0;
+    font-size: 25px;
+}
