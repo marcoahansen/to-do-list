@@ -1,16 +1,18 @@
 import { useState, useEffect } from 'react'
-import{ useNavigate } from 'react-router-dom'
 import { VscTrash, VscEdit } from "react-icons/vsc";
+import { FaCheck } from "react-icons/fa";
 import './home.css'
 
 function Home(){
-    const navigate = useNavigate()
-    
     const [idToDo, setIdToDo] = useState(0)
     
     const [toDos, setToDos] = useState([])
     
     const [input, setInput] = useState('')
+
+    const [editToDo, setEditToDo] = useState(null);
+
+    const [editToDoText, setEditToDoText] = useState("");
     
     useEffect(()=>{
         const toDosStorage = localStorage.getItem('toDos');
@@ -45,8 +47,15 @@ function Home(){
         setToDos(toDosArrayUpdate)
     }
 
-    function editToDo(item){
-       navigate(`/todo/${item.id}`, {state:{item:item}})
+    function submitEditToDo(id){
+        const updatedTodos = [...toDos].map((toDo) => {
+            if (toDo.id === id) {
+              toDo.value = editToDoText;
+            }
+            return toDo;
+          });
+          setToDos(updatedTodos);
+          setEditToDo(null);
     }
 
     function deleteToDo(index){
@@ -59,7 +68,7 @@ function Home(){
         <div className='all-todos-list'>
             <div className='todos-list-container todo-input'>
                 <input type='text' value={input} onChange={e => setInput(e.target.value)}/>
-                <button type='button' disabled={!input} onClick={addToDo}>Adicionar</button>
+                <button type='button' disabled={!input} onClick={addToDo}>+</button>
             </div>
             <ul>
                 {toDos.map((toDo, index) =>(
@@ -71,10 +80,18 @@ function Home(){
                             </div>
                         </label>
                         <div className='todo-text'>
-                            {toDo.value}
+                            {toDo.id === editToDo ? (
+                                <input type='text' placeholder={toDo.value} onChange={(e) => setEditToDoText(e.target.value)}/> 
+                            ) : (
+                                <div>{toDo.value}</div>
+                            )}
                         </div>
                         <div className='buttons'>
-                            <button className='button-todo' onClick={()=> editToDo(toDo)}><VscEdit/></button>
+                            {toDo.id === editToDo ? (
+                                <button className='button-todo' onClick={()=> submitEditToDo(toDo.id)}><FaCheck/></button>
+                            ) : (
+                                <button className='button-todo' onClick={()=> setEditToDo(toDo.id)}><VscEdit/></button>
+                            )}
                             <button className='button-todo' onClick={()=> deleteToDo(index)}><VscTrash/></button>
                         </div>
                     </li>

@@ -1,4 +1,6 @@
 .footer{
+    position: fixed;
+    bottom: 0;
     height: 60px;
     width: 100%;
     display: flex;
@@ -7,7 +9,12 @@
     background-color: #124559;
 }
 
-.github{
+.social{
+    display: flex;
+    gap: 12px;
+}
+
+.github,.linkedin{
     color:#EFF6E0;
     font-size: 25px;
 }

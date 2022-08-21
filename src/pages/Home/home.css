@@ -1,8 +1,10 @@
 .all-todos-list{
+    margin-top: 80px;
     font-size: 16px;
     font-weight: 500;
-    min-width: 350px;
-    max-width: 100%;
+    width: 400px;
+    max-width: 95%;
+    overflow: scroll;
 }
 
 .todos-list-container{
@@ -20,6 +22,7 @@
 
 .completed{
   background-color:  #598392;
+  text-decoration: line-through 2px;
 }
 
 .todo-text{
@@ -30,10 +33,13 @@
 
 .todo-input{
     width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .todo-input input{
-    width: 60%;
+    width: 80%;
     background-color: #EFF6E0;
     border: transparent;
     height: 30px;
@@ -48,16 +54,20 @@
   
 }
 
+.todo-input button:disabled{
+  background-color: #043a50;
+  color: #78b5cc;
+}
 .todo-input button{
-    width: 40%;
+    width: 20%;
     background-color: #021e29;
     border: transparent;
-    height: 31px;
+    height: 32px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     color: #EFF6E0;
-    font-weight: 600;
-    font-size: 15px;
+    font-weight: 800;
+    font-size: 20px;
 }
 
 .toggler-wrapper {
@@ -128,5 +138,4 @@
     border: transparent;
     font-size: 25px;
     color: #EFF6E0;
-
 }
