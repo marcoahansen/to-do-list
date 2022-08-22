@@ -1,5 +1,6 @@
 .all-todos-list{
     margin-top: 100px;
+    margin-bottom: 100px;
     font-size: 16px;
     font-weight: 500;
     width: 400px;
@@ -152,4 +153,8 @@
     border: transparent;
     font-size: 25px;
     color: #EFF6E0;
+}
+
+.button-todo:disabled{
+  color: #598392;
 }

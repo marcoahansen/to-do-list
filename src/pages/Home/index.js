@@ -88,9 +88,9 @@ function Home(){
                         </div>
                         <div className='buttons'>
                             {toDo.id === editToDo ? (
-                                <button className='button-todo' onClick={()=> submitEditToDo(toDo.id)}><FaCheck/></button>
+                                <button className='button-todo' disabled={!editToDoText} onClick={()=> submitEditToDo(toDo.id)}><FaCheck/></button>
                             ) : (
-                                <button className='button-todo' onClick={()=> setEditToDo(toDo.id)}><VscEdit/></button>
+                                <button className='button-todo'  onClick={()=> setEditToDo(toDo.id)}><VscEdit/></button>
                             )}
                             <button className='button-todo' onClick={()=> deleteToDo(index)}><VscTrash/></button>
                         </div>
