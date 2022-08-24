@@ -4,6 +4,7 @@ import { FaCheck } from "react-icons/fa";
 import "./home.css";
 
 function Home() {
+  let value = "";
   const [idToDo, setIdToDo] = useState(0);
 
   const [toDos, setToDos] = useState([]);
@@ -28,6 +29,12 @@ function Home() {
     }
   }, [toDos]);
 
+  useEffect(() => {
+    if (editToDo != null) {
+      setEditToDoText(editToDo.value);
+    }
+  }, [editToDo]);
+
   function addToDo() {
     setToDos([...toDos, { id: idToDo, value: input, status: false }]);
     setInput("");
@@ -38,7 +45,6 @@ function Home() {
     let toDosArrayUpdate = [...toDos].map((toDo) => {
       if (toDo.id === id) {
         toDo.status = !toDo.status;
-        console.log(toDo.status);
       }
       return toDo;
     });
@@ -54,6 +60,7 @@ function Home() {
     });
     setToDos(updatedTodos);
     setEditToDo(null);
+    setEditToDoText("");
   }
 
   function deleteToDo(index) {
@@ -96,10 +103,11 @@ function Home() {
               </div>
             </label>
             <div className="todo-text">
-              {toDo.id === editToDo ? (
+              {editToDo && toDo.id === editToDo.id ? (
                 <input
                   type="text"
                   placeholder={toDo.value}
+                  value={editToDoText}
                   onChange={(e) => setEditToDoText(e.target.value)}
                 />
               ) : (
@@ -107,7 +115,7 @@ function Home() {
               )}
             </div>
             <div className="buttons">
-              {toDo.id === editToDo ? (
+              {editToDo && toDo.id === editToDo.id ? (
                 <button
                   className="button-todo"
                   disabled={!editToDoText}
@@ -118,7 +126,9 @@ function Home() {
               ) : (
                 <button
                   className="button-todo"
-                  onClick={() => setEditToDo(toDo.id)}
+                  onClick={() =>
+                    setEditToDo({ id: toDo.id, value: toDo.value })
+                  }
                 >
                   <VscEdit />
                 </button>
