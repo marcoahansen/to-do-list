@@ -9,6 +9,7 @@
     background-color: #124559;
     flex-direction: column;
     gap: 10px;
+    z-index: 10;
 }
 h1{
     font-size: 24px;
