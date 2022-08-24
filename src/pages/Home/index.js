@@ -1,10 +1,12 @@
+import React from 'react';
 import { useState, useEffect } from 'react'
 import { VscTrash, VscEdit } from "react-icons/vsc";
 import { FaCheck } from "react-icons/fa";
 import './home.css'
+import { Dialog, Button, DialogActions, DialogTitle, Slide } from '@mui/material';
 
 function Home(){
-    const [idToDo, setIdToDo] = useState(0)
+    const [idToDo, setIdToDo] = useState()
     
     const [toDos, setToDos] = useState([])
     
@@ -12,56 +14,75 @@ function Home(){
 
     const [editToDo, setEditToDo] = useState(null);
 
-    const [editToDoText, setEditToDoText] = useState("");
+    const [editToDoText, setEditToDoText] = useState("")
+
+    const[confirmOpen, setConfirmOpen] = useState(false)
+
+    const Transition = React.forwardRef(function Transition(props, ref) {
+        return <Slide direction="up" ref={ref} {...props} />
+      })
+
+    // const handleConfirmOpen = () => {
+    //     setConfirmOpen(true)
+    // } 
+    const handleConfirmClose = () => {
+        setConfirmOpen(false)
+    } 
     
     useEffect(()=>{
-        const toDosStorage = localStorage.getItem('toDos');
+        const toDosStorage = localStorage.getItem('toDos')
         
         if(toDosStorage){
-            setToDos(JSON.parse(toDosStorage));
+            setToDos(JSON.parse(toDosStorage))
         }
 
     }, [])
 
     useEffect(()=>{
         if(toDos.length > 0){
-            localStorage.setItem('toDos', JSON.stringify(toDos));
+            localStorage.setItem('toDos', JSON.stringify(toDos))
         }
 
     }, [toDos])
 
     function addToDo(){
-        setToDos([...toDos, {id: idToDo, value: input, status: false}])
-        setInput('');
-        setIdToDo(prev => prev+1)
+        setToDos([...toDos, {id: Date.now(), value: input, status: false}])
+        setInput('')
     }
 
     function toggleStatus(id){
-        let toDosArrayUpdate = [...toDos].map((toDo)=>{
+        let updatedTodos = [...toDos].map((toDo)=>{
             if (toDo.id === id){
                 toDo.status = !toDo.status
                 console.log(toDo.status)
             }
             return toDo
         })
-        setToDos(toDosArrayUpdate)
+        setToDos(updatedTodos)
     }
 
     function submitEditToDo(id){
-        const updatedTodos = [...toDos].map((toDo) => {
+        let updatedTodos = [...toDos].map((toDo) => {
             if (toDo.id === id) {
-              toDo.value = editToDoText;
+              toDo.value = editToDoText
             }
-            return toDo;
+            return toDo
           });
-          setToDos(updatedTodos);
-          setEditToDo(null);
+          setToDos(updatedTodos)
+          setEditToDo(null)
     }
 
-    function deleteToDo(index){
-        let toDosArray = [...toDos]
-        toDosArray.splice(index, 1)
-        setToDos(toDosArray)
+    function confirmDelete(id){
+        setIdToDo(id)
+        setConfirmOpen(true)
+    }
+
+    function deleteToDo(id){
+        let updatedTodos = toDos.filter((toDo) => toDo.id !== id)
+        console.log(updatedTodos)
+        setToDos(updatedTodos)
+        setConfirmOpen(false)
+        setIdToDo()
     }
 
     return(
@@ -71,7 +92,7 @@ function Home(){
                 <button type='button' disabled={!input} onClick={addToDo}>+</button>
             </div>
             <ul>
-                {toDos.map((toDo, index) =>(
+                {toDos.map((toDo) =>(
                     <li className={toDo.status ? 'todos-list todos-list-container completed' : 'todos-list todos-list-container'} key={toDo.id}>
                         <label className="toggler-wrapper style-9">
                             <input type='checkbox' id='status' checked={toDo.status} onChange={()=> toggleStatus(toDo.id)}/>
@@ -92,11 +113,24 @@ function Home(){
                             ) : (
                                 <button className='button-todo'  onClick={()=> setEditToDo(toDo.id)}><VscEdit/></button>
                             )}
-                            <button className='button-todo' onClick={()=> deleteToDo(index)}><VscTrash/></button>
+                            <button className='button-todo' onClick={()=> confirmDelete(toDo.id)}><VscTrash/></button>
                         </div>
                     </li>
                 ))}
             </ul>
+            <Dialog
+            open={confirmOpen}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleConfirmClose}
+            aria-describedby="alert-dialog-slide"
+            >
+                <DialogTitle>{"Deseja excluir essa tarefa?"}</DialogTitle>
+                <DialogActions>
+                    <Button onClick={handleConfirmClose}>Não</Button>
+                    <Button onClick={()=> deleteToDo(idToDo)}>Sim</Button>
+                </DialogActions>
+            </Dialog>
         </div>
     )
 }

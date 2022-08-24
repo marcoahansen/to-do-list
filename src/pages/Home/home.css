@@ -5,7 +5,7 @@
     font-weight: 500;
     width: 400px;
     max-width: 95%;
-    overflow: auto;
+    overflow-y: auto;
 }
 
 .todos-list-container{
@@ -157,4 +157,16 @@
 
 .button-todo:disabled{
   color: #598392;
+}
+
+.MuiTypography-root.MuiDialogTitle-root{
+  background-color: #043a50;
+  color: #EFF6E0;
+} 
+.MuiDialogActions-root.MuiDialogActions-spacing{
+  background-color: #043a50;
+} 
+
+.MuiButtonBase-root.MuiButton-root {
+  color: #EFF6E0;
 }
