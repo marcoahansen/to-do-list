@@ -84,8 +84,8 @@ function Home() {
     setConfirmOpen(true);
   }
 
-  function deleteToDo(id) {
-    let updatedTodos = toDos.filter((toDo) => toDo.id !== id);
+  function deleteToDo() {
+    let updatedTodos = toDos.filter((toDo) => toDo.id !== idToDo);
     console.log(updatedTodos);
     setToDos(updatedTodos);
     setConfirmOpen(false);
@@ -172,7 +172,7 @@ function Home() {
         <DialogTitle>{"Deseja excluir essa tarefa?"}</DialogTitle>
         <DialogActions>
           <Button onClick={handleConfirmClose}>Não</Button>
-          <Button onClick={() => deleteToDo(idToDo)}>Sim</Button>
+          <Button onClick={() => deleteToDo()}>Sim</Button>
         </DialogActions>
       </Dialog>
     </div>
